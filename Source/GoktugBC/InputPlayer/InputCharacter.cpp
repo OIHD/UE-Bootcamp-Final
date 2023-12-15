@@ -9,6 +9,7 @@
 #include "InputCharacter.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GoktugBC/GunProjectile.h"
 
 // Sets default values
 AInputCharacter::AInputCharacter()
@@ -64,6 +65,7 @@ void AInputCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 		Input->BindAction(HareketAction,ETriggerEvent::Triggered,this,&AInputCharacter::Hareket);
 		Input->BindAction(SeyirAction,ETriggerEvent::Triggered,this,&AInputCharacter::Seyir);
 		Input->BindAction(ZiplaAction,ETriggerEvent::Triggered,this,&AInputCharacter::Zipla);
+		Input->BindAction(GunAction,ETriggerEvent::Triggered,this,&AInputCharacter::Gun);
 	}
 
 
@@ -111,5 +113,18 @@ void AInputCharacter::Etkilesim()
 	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, "Techcareer Unreal-Engine bootcamp");
 }
 
+void AInputCharacter::Gun()
+{
+	//if (Role <= ROLE_Authority )
+	{
+		GunServerShot();
+		return ;
+	}
+	
+}
 
-
+void AInputCharacter::GunServerShot_Implementation()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Yellow, "Gun : Shot");
+	GetWorld()->SpawnActor<AGunProjectile>(GunProjectileActor,GetActorLocation(),GetActorRotation() );
+}

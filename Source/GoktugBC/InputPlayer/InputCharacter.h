@@ -37,6 +37,9 @@ protected:
 	UPROPERTY(EditAnyWhere, Category = "InputSistemi")
 	class UInputAction* EtkilesimAction;
 
+	UPROPERTY(EditAnyWhere, Category = "InputSistemi")
+	class UInputAction* GunAction;
+
 public:
 	// Sets default values for this character's properties
 	AInputCharacter();
@@ -52,10 +55,21 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(EditAnyWhere)
+	TSubclassOf<class AGunProjectile> GunProjectileActor;
+
+	UFUNCTION(Server,Reliable)
+	void GunServerShot();
+
 protected:
+
 	void Hareket(const FInputActionValue& InputValue);
 	void Seyir(const FInputActionValue& InputValue);
 	void Zipla();
 	void Etkilesim() ;
+	void Gun() ;
+
+	
+
 
 };
